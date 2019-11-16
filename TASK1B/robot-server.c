@@ -86,8 +86,8 @@ int socket_create(struct sockaddr_in dest_addr, struct sockaddr_in source_addr){
 	ip_protocol = IPPROTO_IP;
 
 	int my_sock;
-    
-    my_sock=socket(addr_family ,ip_protocol,0);
+
+    my_sock=socket(addr_family, SOCK_STREAM, ip_protocol);
 
      if(my_sock ==-1)
     {
