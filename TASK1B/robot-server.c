@@ -128,7 +128,6 @@ int receive_from_send_to_client(int sock){
         perror("accept");
         exit(0);
     }
-    
 	return 0;
 
 }
@@ -177,4 +176,3 @@ int main() {
 	}
 
 	return 0;
-}
