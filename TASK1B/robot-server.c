@@ -95,7 +95,6 @@ int socket_create(struct sockaddr_in dest_addr, struct sockaddr_in source_addr){
         exit(0);
     }
 
-
 	return my_sock;
 }
 
