@@ -50,8 +50,8 @@
 #define MAXCHAR 1000				// max characters to read from txt file
 
 // Global variables
-struct sockaddr_in dest_addr;
-struct sockaddr_in source_addr;
+struct sockaddr_in dest_addr;       //server
+struct sockaddr_in source_addr;     //client
 
 char rx_buffer[RX_BUFFER_SIZE];		// buffer to store data from client
 char tx_buffer[RX_BUFFER_SIZE];		// buffer to store data to be sent to client
@@ -95,6 +95,18 @@ int socket_create(struct sockaddr_in dest_addr, struct sockaddr_in source_addr){
         exit(0);
     }
 
+    if(bind(my_sock, (struct sockaddr *)&dest_addr, sizeof(dest_addr)) == -1)
+    {
+        perror("Bind");
+        exit(0);
+    }
+
+    if(listen(my_sock, 2)==-1)
+    {
+        perror("Listen");
+        exit(0);
+    }
+
 	return my_sock;
 }
 
@@ -109,7 +121,14 @@ int socket_create(struct sockaddr_in dest_addr, struct sockaddr_in source_addr){
 * Example call: 	receive_from_send_to_client(sock);
 */
 int receive_from_send_to_client(int sock){
+    int len = sizeof(struct sockaddr_in);
 
+    if((listen_sock=accept(sock, (struct sockaddr *)&source_addr, &len))==-1)
+    {
+        perror("accept");
+        exit(0);
+    }
+    
 	return 0;
 
 }
