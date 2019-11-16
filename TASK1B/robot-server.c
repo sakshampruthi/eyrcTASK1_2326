@@ -68,7 +68,7 @@ FILE *input_fp, *output_fp;
 
 /*
 * Function Name:	socket_create
-* Inputs:			dest_addr [ structure type for destination address ]
+* Inputs:	    	dest_addr [ structure type for destination address ]
 * 					source_addr [ structure type for source address ]
 * Outputs: 			my_sock [ socket value, if connection is properly created ]
 * Purpose: 			the function creates the socket connection with the server
@@ -87,7 +87,13 @@ int socket_create(struct sockaddr_in dest_addr, struct sockaddr_in source_addr){
 
 	int my_sock;
 
+    my_sock=socket(addr_family, SOCK_STREAM, ip_protocol);
 
+     if(my_sock ==-1)
+    {
+        perror("server socket");
+        exit(0);
+    }
 
 	return my_sock;
 }
