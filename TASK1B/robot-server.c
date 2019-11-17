@@ -87,18 +87,18 @@ int socket_create(struct sockaddr_in dest_addr, struct sockaddr_in source_addr){
 
 	int my_sock;
 
-    my_sock=socket(addr_family, SOCK_STREAM, ip_protocol);
-    strcpy(ipv4_addr_str,dest_addr.sin_addr.s_addr);
-    printf("[DEBUG] Self IP: %s",ipv4_addr_str);
+    
+    // strcpy(ipv4_addr_str,htonl(dest_addr.sin_addr.s_addr));
+    printf("[DEBUG] Self IP: %u",dest_addr.sin_addr.s_addr);
+    // prit
 
-    if(my_sock ==-1)
+    if((my_sock=socket(addr_family, SOCK_STREAM, ip_protocol)) ==-1)
     {
         perror("server socket");
         exit(0);
-    }
-    else
+    }else if(my_sock)
     {
-        printf("[DEBUG] Socket created");
+        printf("\n[DEBUG] Socket created");
     }
     
 
@@ -107,20 +107,33 @@ int socket_create(struct sockaddr_in dest_addr, struct sockaddr_in source_addr){
         perror("Bind");
         exit(0);
     }
-    else
+    else if(1)
     {
-        printf("[DEBUG] Socket bound, port %d",dest_addr.sin_port);
+        printf("\n[DEBUG] Socket bound, port %d",SERVER_PORT);
+        // printf("\n[DEBUG] Socket listening");
     }
 
-    if(listen(my_sock, 2)==-1)
+    if(listen(my_sock, 1) == -1)
     {
         perror("Listen");
         exit(0);
     }
-    else
+    else if(1)
     {
-        printf("[DEBUG] Socket listening");
+        // printf("\n[DEBUG] Socket bound, port %d",SERVER_PORT);
+        printf("\n[DEBUG] Socket listening");
     }
+
+   /* if(listen(my_sock, 2)==-1)
+    {
+        perror("Listen");
+        printf("lol");
+        exit(0);
+    }
+    else if (1)
+    {
+        printf("\n[DEBUG] Socket listening");
+    }*/
 
 	return my_sock;
 }
@@ -143,7 +156,7 @@ int receive_from_send_to_client(int sock){
         perror("accept");
         exit(0);
     }
-    else
+    else if(1)
     {
         printf("[DEBUG] Socket accepted");
     }
@@ -211,3 +224,4 @@ int main() {
 	}
 
 	return 0;
+}
