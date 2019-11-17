@@ -88,23 +88,38 @@ int socket_create(struct sockaddr_in dest_addr, struct sockaddr_in source_addr){
 	int my_sock;
 
     my_sock=socket(addr_family, SOCK_STREAM, ip_protocol);
+    strcpy(ipv4_addr_str,dest_addr.sin_addr.s_addr);
+    printf("[DEBUG] Self IP: %s",ipv4_addr_str);
 
-     if(my_sock ==-1)
+    if(my_sock ==-1)
     {
         perror("server socket");
         exit(0);
     }
+    else
+    {
+        printf("[DEBUG] Socket created");
+    }
+    
 
     if(bind(my_sock, (struct sockaddr *)&dest_addr, sizeof(dest_addr)) == -1)
     {
         perror("Bind");
         exit(0);
     }
+    else
+    {
+        printf("[DEBUG] Socket bound, port %d",dest_addr.sin_port);
+    }
 
     if(listen(my_sock, 2)==-1)
     {
         perror("Listen");
         exit(0);
+    }
+    else
+    {
+        printf("[DEBUG] Socket listening");
     }
 
 	return my_sock;
@@ -128,6 +143,26 @@ int receive_from_send_to_client(int sock){
         perror("accept");
         exit(0);
     }
+    else
+    {
+        printf("[DEBUG] Socket accepted");
+    }
+    
+    strcpy(ipv4_addr_str_client,inet_ntoa(source_addr.sin_addr));
+    int data_len=1;
+    while (data_len)
+    {
+        
+        data_len = recv(sock, rx_buffer, MAXCHAR, 0);
+        rx_buffer[data_len]='\0';
+        printf("#[%s]#",rx_buffer);
+        if(data_len)
+        {
+            
+        }
+
+    }
+     
 	return 0;
 
 }
